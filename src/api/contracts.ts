@@ -1,6 +1,8 @@
 import { Router, Request, Response } from 'express';
 import { prisma } from '../db';
 import { z } from 'zod';
+import { fetchContractSpec } from '../indexer/wasm-spec';
+import { abiRouter } from './abi';
 
 export const contractRouter = Router();
 
