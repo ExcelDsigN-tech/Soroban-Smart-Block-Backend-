@@ -12,7 +12,9 @@ import { protocolRouter } from './protocol';
 import { nftRouter } from './nft';
 import { alertsRouter } from './alerts';
 import { assetsRouter } from './assets';
-import advancedEventsRouter from './advanced-events';
+import { sseRouter } from './sse';
+import { graphRouter } from './graph';
+import { virtualListRouter } from './virtualList';
 
 export const router = Router();
 
@@ -29,4 +31,6 @@ router.use('/protocol', protocolRouter);
 router.use('/nft', nftRouter);
 router.use('/alerts', alertsRouter);
 router.use('/assets', assetsRouter);
-router.use('/', advancedEventsRouter);
+router.use('/sse', sseRouter);
+router.use('/graph', graphRouter);
+router.use('/virtual-list', virtualListRouter);
