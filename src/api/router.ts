@@ -12,6 +12,10 @@ import { protocolRouter } from './protocol';
 import { nftRouter } from './nft';
 import { alertsRouter } from './alerts';
 import { assetsRouter } from './assets';
+import { oracleAuditRouter } from './oracle-audit';
+import { rwaComplianceRouter } from './rwa-compliance';
+import { resourceAuditRouter } from './resource-audit';
+import { factoryTrackerRouter } from './factory-tracker';
 
 export const router = Router();
 
@@ -28,3 +32,7 @@ router.use('/protocol', protocolRouter);
 router.use('/nft', nftRouter);
 router.use('/alerts', alertsRouter);
 router.use('/assets', assetsRouter);
+router.use('/audits/oracle', oracleAuditRouter);
+router.use('/compliance', rwaComplianceRouter);
+router.use('/audits/resources', resourceAuditRouter);
+router.use('/factories', factoryTrackerRouter);
