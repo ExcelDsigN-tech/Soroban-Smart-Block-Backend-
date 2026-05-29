@@ -542,6 +542,38 @@ model WebhookDelivery {
   @@index([eventId])
 }
 
+// BN254 ZK-Host function gas exemption tracker (CAP-0080)
+// Tracks transactions using native BN254 curve host functions and
+// calculates the gas savings vs equivalent Wasm-side computation.
+model Bn254GasExemption {
+  id              String   @id @default(cuid())
+  transactionHash String   @unique
+  contractAddress String?
+  // Detected BN254 operation types involved, e.g. ["bn254_add", "bn254_mul", "bn254_pairing_check", "bn254_multiscalar_mul"]
+  bn254Ops        Json     @default("[]")
+  // Number of detected BN254 host function calls
+  opCount         Int      @default(0)
+  // Actual fee charged for the transaction (stroops)
+  feeCharged      String?
+  // Estimated equivalent fee if done in Wasm (stroops)
+  estimatedWasmFee String?
+  // Net stroops saved
+  stroopSavings   String?
+  // Savings percentage (e.g. 74.0)
+  savingsPct      Float?
+  // CPU instructions from soroban resources
+  cpuInstructions Int      @default(0)
+  // Multi-scalar multiplication complexity factor
+  msmComplexity   Int      @default(0)
+  ledgerSequence  Int
+  ledgerCloseTime DateTime
+  createdAt       DateTime @default(now())
+
+  @@index([contractAddress])
+  @@index([ledgerSequence])
+  @@index([savingsPct])
+}
+
 // Gas cost analytics snapshot — pre-aggregated fee stats per time bucket
 model GasAnalyticsSnapshot {
   id          String   @id @default(cuid())

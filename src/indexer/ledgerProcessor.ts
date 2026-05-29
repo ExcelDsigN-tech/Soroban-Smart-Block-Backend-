@@ -11,6 +11,7 @@ import { inspectSignature } from './signatureInspector';
 import { detectContention } from './contention';
 import { analyseCallTrace, storeReentrancyAlert } from './reentrancy-detector';
 import { parseCallTrace } from './call-trace';
+import { trackBn254GasExemption } from './bn254-tracker';
 import { xdr } from '@stellar/stellar-sdk';
 
 /**
@@ -111,6 +112,19 @@ export async function processLedgerRange(start: number, end: number): Promise<vo
           // non-critical — never block indexing
         }
       }
+
+      // CAP-0080: BN254 ZK host function gas exemption tracking (non-blocking)
+      trackBn254GasExemption(
+        event.transactionHash,
+        decoded.contractAddress,
+        decoded.functionName,
+        String((txResult as any)?.feeCharged ?? ''),
+        sorobanResources as Record<string, unknown> | null,
+        event.ledgerSequence,
+        event.ledgerCloseTime,
+      ).catch((err) =>
+        console.warn(`[bn254] tracking failed for ${event.transactionHash}:`, err),
+      );
     }
   }
 
