@@ -18,7 +18,9 @@ import { graphRouter } from './graph';
 import { virtualListRouter } from './virtualList';
 import { tokenMetadataRouter } from './token-metadata';
 import { webhooksRouter } from './webhooks';
-import { storageRouter } from './storage';
+import { analyticsRouter } from './analytics';
+import { portfolioRouter } from './portfolio';
+import { exportsRouter } from './exports';
 
 export const router = Router();
 
@@ -41,4 +43,6 @@ router.use('/graph', graphRouter);
 router.use('/virtual-list', virtualListRouter);
 router.use('/token-metadata', tokenMetadataRouter);
 router.use('/webhooks', webhooksRouter);
-router.use('/storage', storageRouter);
+router.use('/analytics', analyticsRouter);
+router.use('/portfolio', portfolioRouter);
+router.use('/exports', exportsRouter);
